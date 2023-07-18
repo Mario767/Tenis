@@ -20,7 +20,7 @@ export default {
   },
   mounted() {
     this.dohvatiLiveTurnire();
-    setInterval(this.dohvatiLiveTurnire, 6000000); // Postavljamo poziv na svakih 15 sekundi (15 * 1000 milisekundi)
+    setInterval(this.dohvatiLiveTurnire, 300000); // Postavljamo poziv na svakih 15 sekundi (15 * 1000 milisekundi)
   },
   methods: {
     dohvatiLiveTurnire() {

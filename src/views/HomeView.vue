@@ -23,15 +23,16 @@
           <strong>Social networks</strong>
           <v-spacer></v-spacer>
           <v-btn
-            v-for="icon in icons"
+            v-for="(icon, index) in icons"
             :key="icon"
-            class="mx-4"
+            class="mx-2"
             icon
             variant="plain"
             size="small"
             @click="openSocialMedia(icon)"
+            v-show="showIcon(index)"
           >
-            <v-icon :class="getSocialIconClass(icon)" :color="getIconColor(icon)">{{ icon }}</v-icon>
+            <v-icon :class="getSocialIconClass(icon)" :color="getIconColor(icon)" style="font-size: 24px">{{ icon }}</v-icon>
           </v-btn>
         </div>
       </v-footer>
@@ -101,13 +102,18 @@ export default {
       return icon;
     },
     getIconColor(icon) {
-  const whiteIcons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram', 'mdi-youtube'];
-  if (whiteIcons.includes(icon)) {
-    return 'white';
-  }
-  return 'white--text';
-},
-
+      const whiteIcons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram', 'mdi-youtube'];
+      if (whiteIcons.includes(icon)) {
+        return 'white';
+      }
+      return 'white--text';
+    },
+    showIcon(index) {
+      if (this.$vuetify.breakpoint.mdAndDown) {
+        return index < this.icons.length - 1; // Prikazuje samo jednu ikonu manje od ukupnog broja ikona na mobilnim uređajima
+      }
+      return true; // Prikazuje sve ikone na većim ekranima
+    },
   },
 };
 </script>
@@ -176,8 +182,15 @@ export default {
   min-width: auto;
 }
 
-.mx-4 {
-  margin-left: 16px;
-  margin-right: 16px;
+.mx-2 {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+/* Sakrivanje ikona na mobilnim uređajima */
+@media (max-width: 600px) {
+  .footer .mx-2:last-child {
+    display: none;
+  }
 }
 </style>
